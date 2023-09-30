@@ -1,0 +1,93 @@
+题目链接
+https://leetcode.cn/problems/spiral-matrix-ii/description/
+
+看了答案 思路倒是好理解 从头开始对每个元素依次赋值 方向是 右 下 左 上  遇到边界 或者下个元素被赋过值则改变方向
+我感觉难点是二级指针 这块的理解 需要先申请一片空间存放n个指针 然后这n个指针依次在指向另一片空间( 存放n个整型数据) 也就是数组
+同时还有对题目给的参数赋值这块也有点恶心..没搞懂传一个 int *returnSize 就算了 还传个 int **returnColumnSizes
+不知道有啥意义 检测对二级指针的掌控 好吧 我承认我菜
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int **generateMatrix(int n, int *returnSize, int **returnColumnSizes)
+{
+
+    int **arr = (int **)malloc(sizeof(int *) * n);
+    for (int i = 0; i < n; i++)
+    {
+        arr[i] = (int *)malloc(sizeof(int) * n);
+        for (int j = 0; j < n; j++)
+        {
+            memset(arr[i], 0, sizeof(arr[i][j]) * n);
+        }
+      
+    }
+
+    int val = 1;
+
+    int j = 0, i = 0;
+    while (val <= n * n)
+    {
+        while (j < n && arr[i][j] == 0)
+        {
+            arr[i][j] = val;
+            val++;
+            j++;
+        }
+        j--;
+        i++;
+        // 情况2 一直往下移动
+        while (i < n && arr[i][j] == 0)
+        {
+            arr[i][j] = val;
+            val++;
+            i++;
+        }
+        i--;
+        j--;
+        // 情况3 一直往左移动
+        while (j >= 0 && arr[i][j] == 0)
+        {
+            arr[i][j] = val;
+            val++;
+            j--;
+        }
+        j++;
+        i--;
+        // 情况四一直往上移动
+        while (i >= 0 && arr[i][j] == 0)
+        {
+            arr[i][j] = val;
+            val++;
+            i--;
+        }
+        i++;
+        j++;
+    }
+
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("%d ", arr[i][j]);
+        }
+    }
+    *returnSize = n;
+    *returnColumnSizes = malloc(sizeof(int) * n);
+    for (int i = 0; i < n; i++)
+    {
+        (*returnColumnSizes)[i] = n;
+    }
+    return arr;
+}
+int main()
+{
+    int *returnSize = (int *)malloc(sizeof(int));
+    int **returnColumnSizes = (int **)malloc(sizeof(int *));
+
+    generateMatrix(3, returnSize, returnColumnSizes);
+    // generateMatrix(3);
+    return 0;
+}
