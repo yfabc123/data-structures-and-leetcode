@@ -1,4 +1,5 @@
-磕磕绊绊 加油!
+开始本来考虑了三种情况 实际上最后用参数列表初始化方式就够了 啥也不是...
+![image](https://github.com/yfabc123/data-structures-and-leetcode/assets/103840107/e0b5dc15-60ba-4fcc-84b3-6158cf78fefa)
 
 ```cpp
 /*
