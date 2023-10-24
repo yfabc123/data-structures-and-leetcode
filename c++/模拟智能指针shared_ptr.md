@@ -124,6 +124,7 @@ int main()
     my_shared_ptr<Test> test2;
     cout << *(test2.count) << endl;
     test2 = test1;
+    (*test2).show();
     test2->show();
     test2.operator->()->show();
 
