@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <pthread.h>
 #include "myThreadPool.h"
+int global=0;
 TPool *createPool(int pmaxThread, int pmaxJob)
 {
     TPool *tPool = (TPool *)malloc(sizeof(TPool));
@@ -51,7 +52,7 @@ err:
     {
         printf("freetPool\n");
         free(tPool);
-        exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE); 
     }
     else if (!tPool->qJob)
     {
@@ -113,10 +114,4 @@ void *job(void *arg)
 {
     int result = (int *)arg;
     printf("线程%ld执行了%d\n", pthread_self(), result);
-}
-int main()
-{
-    TPool *tPool = createPool(5, 5);
-    addJob(tPool);
-    return 0;
 }
